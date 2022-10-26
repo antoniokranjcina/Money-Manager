@@ -4,12 +4,12 @@ plugins {
 }
 
 android {
-    namespace 'com.antoniok.feature.overview'
-    compileSdk 32
+    namespace 'com.antoniok.feature.newentry'
+    compileSdk 33
 
     defaultConfig {
         minSdk 28
-        targetSdk 32
+        targetSdk 33
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles "consumer-rules.pro"
@@ -37,7 +37,6 @@ android {
 }
 
 dependencies {
-
     implementation project(path: ':core:designsystem')
 
     // Core

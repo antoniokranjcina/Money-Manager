@@ -3,6 +3,7 @@ package com.antoniok.core.designsystem.icon
 import androidx.annotation.DrawableRes
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.ui.graphics.vector.ImageVector
 import com.antoniok.core.designsystem.R
 
@@ -14,6 +15,8 @@ object MmIcons {
     val OverviewBorder = R.drawable.ic_overview_border
 
     val Add = Icons.Default.Add
+
+    val ArrowBack = Icons.Default.ArrowBack
 }
 
 sealed class Icon {

@@ -18,6 +18,11 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 
+enum class TopAppBarIconType {
+    Action,
+    Navigation
+}
+
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MmTopAppBar(
@@ -57,27 +62,41 @@ fun MmTopAppBar(
 }
 
 /**
- * Top app bar with action, displayed on the right
+ * Top app bar with action or navigation icon displayed
  */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MmTopAppBar(
     @StringRes titleRes: Int,
-    actionIcon: ImageVector,
-    actionIconContentDescription: String?,
+    icon: ImageVector,
+    iconContentDescription: String?,
     modifier: Modifier = Modifier,
     colors: TopAppBarColors = TopAppBarDefaults.centerAlignedTopAppBarColors(),
-    onActionClick: () -> Unit = {}
+    onIconClick: () -> Unit = {},
+    iconType: TopAppBarIconType
 ) {
     CenterAlignedTopAppBar(
         title = { Text(text = stringResource(id = titleRes)) },
+        navigationIcon = {
+            if (iconType == TopAppBarIconType.Navigation) {
+                IconButton(onClick = onIconClick) {
+                    Icon(
+                        imageVector = icon,
+                        contentDescription = iconContentDescription,
+                        tint = MaterialTheme.colorScheme.onSurface
+                    )
+                }
+            }
+        },
         actions = {
-            IconButton(onClick = onActionClick) {
-                Icon(
-                    imageVector = actionIcon,
-                    contentDescription = actionIconContentDescription,
-                    tint = MaterialTheme.colorScheme.onSurface
-                )
+            if (iconType == TopAppBarIconType.Action) {
+                IconButton(onClick = onIconClick) {
+                    Icon(
+                        imageVector = icon,
+                        contentDescription = iconContentDescription,
+                        tint = MaterialTheme.colorScheme.onSurface
+                    )
+                }
             }
         },
         colors = colors,
@@ -86,7 +105,7 @@ fun MmTopAppBar(
 }
 
 /**
- * Top app bar with action, displayed on the right
+ * Top app bar only with title
  */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
