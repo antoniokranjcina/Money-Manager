@@ -6,6 +6,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import com.antoniok.feature.dashboard.navigation.dashboardNavigationRoute
 import com.antoniok.feature.dashboard.navigation.dashboardScreen
+import com.antoniok.feature.overview.navigation.overviewScreen
 
 /**
  * Top-level navigation graph. Navigation is organized as explained at
@@ -27,5 +28,6 @@ fun MmNavHost(
         modifier = modifier,
     ) {
         dashboardScreen()
+        overviewScreen()
     }
 }

@@ -15,7 +15,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 
 /**
- * Now in Android navigation bar item with icon and label content slots. Wraps Material 3
+ * Money manager navigation bar item with icon and label content slots. Wraps Material 3
  * [NavigationBarItem].
  *
  * @param selected Whether this item is selected.
@@ -59,7 +59,7 @@ fun RowScope.MmNavigationBarItem(
 }
 
 /**
- * Now in Android navigation bar with content slot. Wraps Material 3 [NavigationBar].
+ * Money manager navigation bar with content slot. Wraps Material 3 [NavigationBar].
  *
  * @param modifier Modifier to be applied to the navigation bar.
  * @param content Destinations inside the navigation bar. This should contain multiple
@@ -79,7 +79,7 @@ fun MmNavigationBar(
 }
 
 /**
- * Now in Android navigation rail item with icon and label content slots. Wraps Material 3
+ * Money manager navigation rail item with icon and label content slots. Wraps Material 3
  * [NavigationRailItem].
  *
  * @param selected Whether this item is selected.
@@ -123,7 +123,7 @@ fun MmNavigationRailItem(
 }
 
 /**
- * Now in Android navigation rail with header and content slots. Wraps Material 3 [NavigationRail].
+ * Money manager navigation rail with header and content slots. Wraps Material 3 [NavigationRail].
  *
  * @param modifier Modifier to be applied to the navigation rail.
  * @param header Optional header that may hold a floating action button or a logo.
@@ -146,7 +146,7 @@ fun MmNavigationRail(
 }
 
 /**
- * Now in Android navigation default values.
+ * Money manager navigation default values.
  */
 object MmNavigationDefaults {
     @Composable

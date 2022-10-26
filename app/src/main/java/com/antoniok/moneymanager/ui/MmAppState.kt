@@ -14,8 +14,10 @@ import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navOptions
 import androidx.tracing.trace
 import com.antoniok.feature.dashboard.navigation.navigateToDashboard
+import com.antoniok.feature.overview.navigation.navigateToOverview
 import com.antoniok.moneymanager.navigation.TopLevelDestination
 import com.antoniok.moneymanager.navigation.TopLevelDestination.DASHBOARD
+import com.antoniok.moneymanager.navigation.TopLevelDestination.OVERVIEW
 
 @Composable
 fun rememberMmAppState(
@@ -73,6 +75,7 @@ class MmAppState(
 
             when (topLevelDestination) {
                 DASHBOARD -> navController.navigateToDashboard(topLevelNavOptions)
+                OVERVIEW -> navController.navigateToOverview(topLevelNavOptions)
             }
         }
     }

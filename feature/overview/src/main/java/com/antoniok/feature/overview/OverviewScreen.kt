@@ -1,4 +1,4 @@
-package com.antoniok.feature.dashboard
+package com.antoniok.feature.overview
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.WindowInsets
@@ -12,15 +12,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import com.antoniok.core.designsystem.component.MmTopAppBar
 
-
 @Composable
-fun DashboardRoute(modifier: Modifier = Modifier) {
-    DashboardScreen(modifier = modifier)
+fun OverviewRoute(modifier: Modifier = Modifier) {
+    OverviewScreen(modifier = modifier)
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-internal fun DashboardScreen(modifier: Modifier = Modifier) {
+internal fun OverviewScreen(modifier: Modifier = Modifier) {
     Scaffold(
         topBar = {
             MmTopAppBar(
@@ -34,7 +33,7 @@ internal fun DashboardScreen(modifier: Modifier = Modifier) {
         contentWindowInsets = WindowInsets(0, 0, 0, 0)
     ) {
         Box(modifier = modifier.padding(it)) {
-            Text(text = "Hello dashboard")
+            Text(text = "Hello overview")
         }
     }
 }
