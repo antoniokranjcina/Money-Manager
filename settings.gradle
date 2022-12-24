@@ -10,17 +10,18 @@ dependencyResolutionManagement {
     repositories {
         google()
         mavenCentral()
+        maven { url 'https://jitpack.io' }
     }
 }
 rootProject.name = "Money Manager"
 include ':app'
 include ':core:common'
 include ':core:data'
-include ':core:database'
 include ':core:designsystem'
-include ':core:domain'
 include ':core:model'
-include ':core:ui'
 include ':feature:dashboard'
 include ':feature:overview'
 include ':feature:newentry'
+include ':core:database'
+include ':core:ui'
+include ':core:domain'

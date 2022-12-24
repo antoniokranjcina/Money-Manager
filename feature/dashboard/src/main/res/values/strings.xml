@@ -3,4 +3,6 @@
     <string name="dashboard">Dashboard</string>
 
     <string name="top_app_bar_title">Money Manager</string>
+
+    <string name="last_transactions">Last Transactions</string>
 </resources>
