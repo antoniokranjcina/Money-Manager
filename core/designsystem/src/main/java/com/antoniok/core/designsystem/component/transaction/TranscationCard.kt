@@ -23,6 +23,7 @@ import com.antoniok.core.designsystem.theme.GreenGray50
 import com.antoniok.core.designsystem.theme.Padding
 import com.antoniok.core.designsystem.theme.Red40
 import com.antoniok.core.model.Transaction
+import com.antoniok.core.model.category.IncomeCategory
 import com.antoniok.core.model.transaction1
 
 private const val MAX_LINES = 1
@@ -44,14 +45,14 @@ fun TransactionCard(
         Row(
             modifier = Modifier.padding(Padding.Large)
         ) {
-            CategoryLine(color = Color(transaction.categoryColorHex))
+            CategoryLine(color = Color(transaction.category.colorHex))
             Spacer16()
             Column(
                 modifier = Modifier.weight(COLUMN_WEIGHT)
             ) {
                 Text(
                     text = transaction.moneySpent,
-                    color = if (transaction.isIncome) {
+                    color = if (transaction.category is IncomeCategory) {
                         Green40
                     } else {
                         Red40

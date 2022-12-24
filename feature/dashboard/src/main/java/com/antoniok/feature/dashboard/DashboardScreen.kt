@@ -54,6 +54,7 @@ internal fun DashboardScreen(
             modifier = Modifier.padding(start = 16.dp, top = 16.dp, end = 16.dp),
             monthlyStatusUiState = monthlyStatusUiState
         )
+        // Some graph here
         when (lastTransactionsUiState) {
             LastTransactionsUiState.Loading, LastTransactionsUiState.Empty -> Unit
             is LastTransactionsUiState.Success -> {
