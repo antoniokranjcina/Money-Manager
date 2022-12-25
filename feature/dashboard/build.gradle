@@ -41,6 +41,7 @@ dependencies {
     implementation project(path: ':core:designsystem')
     implementation project(path: ':core:ui')
     implementation project(path: ':core:model')
+    implementation project(path: ':core:domain')
 
     // Core
     implementation "androidx.core:core-ktx:$core_ktx_version"
