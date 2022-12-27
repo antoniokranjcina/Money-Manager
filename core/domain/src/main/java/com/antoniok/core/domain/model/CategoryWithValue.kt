@@ -13,7 +13,6 @@ data class CategoryWithValue(
     override fun toString(): String {
         return "${category.title}: $value $currency"
     }
-
 }
 
 val categoryWithValue1 = CategoryWithValue(
@@ -24,22 +23,20 @@ val categoryWithValue1 = CategoryWithValue(
 
 val categoryWithValue2 = CategoryWithValue(
     category = previewExpenseCategory2,
-    value = 500.5f,
+    value = 600.5f,
     currency = "€"
 )
 
 val categoryWithValue3 = CategoryWithValue(
     category = previewExpenseCategory3,
-    value = 500.5f,
+    value = 400.5f,
     currency = "€"
 )
 
 val previewCategoriesWithValues = listOf(
-    categoryWithValue3,
-    categoryWithValue1,
-    categoryWithValue2,
     categoryWithValue1,
     categoryWithValue3,
     categoryWithValue2,
+    categoryWithValue1,
     categoryWithValue3,
 )

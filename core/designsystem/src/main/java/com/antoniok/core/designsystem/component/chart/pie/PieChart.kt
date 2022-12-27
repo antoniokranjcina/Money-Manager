@@ -42,11 +42,8 @@ fun PieChart(
     val value = LocalDensity.current.run {
         (radius * 2).toInt().toDp() + 10.dp
     }
-
     Box(
-        modifier = Modifier
-            .fillMaxWidth()
-            .height(value),
+        modifier = Modifier.fillMaxWidth(),
         contentAlignment = Alignment.Center
     ) {
         Box(
