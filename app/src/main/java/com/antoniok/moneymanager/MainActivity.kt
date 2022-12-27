@@ -6,10 +6,12 @@ import androidx.activity.compose.setContent
 import androidx.compose.material3.windowsizeclass.ExperimentalMaterial3WindowSizeClassApi
 import androidx.compose.material3.windowsizeclass.calculateWindowSizeClass
 import androidx.core.view.WindowCompat
+import com.antoniok.core.designsystem.theme.MmTheme
 import com.antoniok.moneymanager.ui.MmApp
 
 @OptIn(ExperimentalMaterial3WindowSizeClassApi::class)
 class MainActivity : ComponentActivity() {
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -18,7 +20,10 @@ class MainActivity : ComponentActivity() {
         WindowCompat.setDecorFitsSystemWindows(window, false)
 
         setContent {
-            MmApp(calculateWindowSizeClass(this))
+            MmTheme {
+                MmApp(windowSizeClass = calculateWindowSizeClass(this))
+            }
         }
     }
+
 }

@@ -8,8 +8,7 @@ import com.antoniok.core.model.category.previewExpenseCategory3
 data class CategoryWithValue(
     val category: Category,
     val value: Float,
-    val currency: String,
-    val isTapped: Boolean = false
+    val currency: String
 ) {
     override fun toString(): String {
         return "${category.title}: $value $currency"
@@ -36,7 +35,11 @@ val categoryWithValue3 = CategoryWithValue(
 )
 
 val previewCategoriesWithValues = listOf(
+    categoryWithValue3,
     categoryWithValue1,
     categoryWithValue2,
-    categoryWithValue3
+    categoryWithValue1,
+    categoryWithValue3,
+    categoryWithValue2,
+    categoryWithValue3,
 )

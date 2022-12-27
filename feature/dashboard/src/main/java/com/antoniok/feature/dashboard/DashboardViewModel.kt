@@ -30,6 +30,7 @@ class DashboardViewModel : ViewModel() {
         )
 
     // This is just dummy flow, representing what will be represented to UI
+    // Pick 5 largest categories, put other in the "rest" category
     val pieChartUiState: StateFlow<PieChartUiState> = flow {
         emit(PieChartUiState.Loading)
         delay(1_100)

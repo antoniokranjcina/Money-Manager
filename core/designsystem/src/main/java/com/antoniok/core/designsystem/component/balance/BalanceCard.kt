@@ -5,7 +5,8 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.Card
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -14,7 +15,6 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import com.antoniok.core.designsystem.R
 import com.antoniok.core.designsystem.component.spacer.Spacer8
-import com.antoniok.core.designsystem.theme.Elevation
 import com.antoniok.core.designsystem.theme.Green40
 import com.antoniok.core.designsystem.theme.GreenGray50
 import com.antoniok.core.designsystem.theme.Padding
@@ -33,8 +33,7 @@ fun BalanceCard(
             Card(
                 modifier = modifier.fillMaxWidth(),
                 shape = MaterialTheme.shapes.medium,
-                elevation = Elevation.Medium,
-                backgroundColor = MaterialTheme.colorScheme.background
+                colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface)
             ) {
                 Column(modifier = Modifier.padding(Padding.Large)) {
                     TextWithValue(
@@ -76,7 +75,7 @@ fun BalanceCard(
 
 @Preview
 @Composable
-fun BalanceCardPreview() {
+private fun BalanceCardPreview() {
     BalanceCard(
         monthlyStatusUiState = MonthlyStatusUiState.Success(previewMonthlyStatus)
     )

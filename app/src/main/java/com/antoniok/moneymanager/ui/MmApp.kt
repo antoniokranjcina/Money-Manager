@@ -12,10 +12,10 @@ import androidx.compose.foundation.layout.safeDrawing
 import androidx.compose.foundation.layout.safeDrawingPadding
 import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.material.FloatingActionButton
-import androidx.compose.material.Icon
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FabPosition
+import androidx.compose.material3.Icon
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
@@ -31,6 +31,8 @@ import androidx.compose.ui.semantics.testTagsAsResourceId
 import androidx.compose.ui.zIndex
 import androidx.navigation.NavDestination
 import androidx.navigation.NavDestination.Companion.hierarchy
+import com.antoniok.core.designsystem.component.MmBackground
+import com.antoniok.core.designsystem.component.MmGradientBackground
 import com.antoniok.core.designsystem.component.MmNavigationBar
 import com.antoniok.core.designsystem.component.MmNavigationBarItem
 import com.antoniok.core.designsystem.component.MmNavigationRail
@@ -38,6 +40,8 @@ import com.antoniok.core.designsystem.component.MmNavigationRailItem
 import com.antoniok.core.designsystem.component.MmTopAppBar
 import com.antoniok.core.designsystem.icon.Icon
 import com.antoniok.core.designsystem.icon.MmIcons
+import com.antoniok.core.designsystem.theme.GradientColors
+import com.antoniok.core.designsystem.theme.LocalGradientColors
 import com.antoniok.core.designsystem.theme.MmTheme
 import com.antoniok.moneymanager.navigation.MmNavHost
 import com.antoniok.moneymanager.navigation.TopLevelDestination
@@ -50,76 +54,94 @@ import com.antoniok.moneymanager.navigation.TopLevelDestination
 @Composable
 fun MmApp(
     windowSizeClass: WindowSizeClass,
-    appState: MmAppState = rememberMmAppState(windowSizeClass)
+    appState: MmAppState = rememberMmAppState(
+        windowSizeClass = windowSizeClass
+    )
 ) {
-    MmTheme {
-        Scaffold(
-            modifier = Modifier.semantics {
-                testTagsAsResourceId = true
-            },
-            containerColor = Color.Transparent,
-            contentColor = MaterialTheme.colors.background,
-            contentWindowInsets = WindowInsets(0, 0, 0, 0),
-            topBar = {
-                // Show the same top bar on top level destinations
-                val destination = appState.currentTopLevelDestination
-                if (destination != null) {
-                    MmTopAppBar(
-                        // When the nav rail is displayed, the top app bar will, by default
-                        // overlap it. This means that the top most item in the nav rail
-                        // won't be tappable. A workaround is to position the top app bar
-                        // behind the nav rail using zIndex.
-                        modifier = Modifier.zIndex(-1F),
-                        titleRes = destination.titleTextId,
-                        colors = TopAppBarDefaults.centerAlignedTopAppBarColors(
-                            containerColor = Color.Transparent
-                        )
-                    )
-                }
-            },
-            bottomBar = {
-                if (appState.shouldShowBottomBar && appState.currentTopLevelDestination != null) {
-                    MmBottomBar(
-                        destinations = appState.topLevelDestinations,
-                        onNavigateToDestination = appState::navigateToTopLevelDestination,
-                        currentDestination = appState.currentDestination
-                    )
-                }
-            },
-            floatingActionButton = {
-                if (appState.currentTopLevelDestination != null) {
-                    FloatingActionButton(
-                        onClick = appState::navigateToNewEntryDestination
+    val shouldShowGradientBackground =
+        appState.currentTopLevelDestination in listOf<TopLevelDestination>()
+
+    MmBackground {
+        MmGradientBackground(
+            gradientColors = if (shouldShowGradientBackground) {
+                LocalGradientColors.current
+            } else {
+                GradientColors()
+            }
+        ) {
+            MmTheme {
+                Scaffold(
+                    modifier = Modifier.semantics {
+                        testTagsAsResourceId = true
+                    },
+                    containerColor = Color.Transparent,
+                    contentColor = MaterialTheme.colors.onBackground,
+                    contentWindowInsets = WindowInsets(0, 0, 0, 0),
+                    topBar = {
+                        // Show the same top bar on top level destinations
+                        val destination = appState.currentTopLevelDestination
+                        if (destination != null) {
+                            MmTopAppBar(
+                                // When the nav rail is displayed, the top app bar will, by default
+                                // overlap it. This means that the top most item in the nav rail
+                                // won't be tappable. A workaround is to position the top app bar
+                                // behind the nav rail using zIndex.
+                                modifier = Modifier.zIndex(-1F),
+                                titleRes = destination.titleTextId,
+                                colors = TopAppBarDefaults.centerAlignedTopAppBarColors(
+                                    containerColor = Color.Transparent
+                                )
+                            )
+                        }
+                    },
+                    bottomBar = {
+                        if (appState.shouldShowBottomBar &&
+                            appState.currentTopLevelDestination != null
+                        ) {
+                            MmBottomBar(
+                                destinations = appState.topLevelDestinations,
+                                onNavigateToDestination = appState::navigateToTopLevelDestination,
+                                currentDestination = appState.currentDestination
+                            )
+                        }
+                    },
+                    floatingActionButton = {
+                        if (appState.currentTopLevelDestination != null) {
+                            FloatingActionButton(
+                                onClick = appState::navigateToNewEntryDestination
+                            ) {
+                                Icon(imageVector = MmIcons.Add, contentDescription = null)
+                            }
+                        }
+                    },
+                    floatingActionButtonPosition = FabPosition.End,
+                ) { padding ->
+                    Row(
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .padding(padding)
+                            .consumedWindowInsets(padding)
+                            .windowInsetsPadding(
+                                WindowInsets.safeDrawing.only(WindowInsetsSides.Horizontal)
+                            )
                     ) {
-                        Icon(imageVector = MmIcons.Add, contentDescription = null)
+                        if (appState.shouldShowNavRail &&
+                            appState.currentTopLevelDestination != null
+                        ) {
+                            MmNavRail(
+                                destinations = appState.topLevelDestinations,
+                                onNavigateToDestination = appState::navigateToTopLevelDestination,
+                                currentDestination = appState.currentDestination,
+                                modifier = Modifier.safeDrawingPadding()
+                            )
+                        }
+
+                        MmNavHost(
+                            navController = appState.navController,
+                            onBackClick = appState::onBackClick
+                        )
                     }
                 }
-            },
-            floatingActionButtonPosition = FabPosition.End,
-        ) { padding ->
-            Row(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .windowInsetsPadding(
-                        WindowInsets.safeDrawing.only(WindowInsetsSides.Horizontal)
-                    )
-            ) {
-                if (appState.shouldShowNavRail && appState.currentTopLevelDestination != null) {
-                    MmNavRail(
-                        destinations = appState.topLevelDestinations,
-                        onNavigateToDestination = appState::navigateToTopLevelDestination,
-                        currentDestination = appState.currentDestination,
-                        modifier = Modifier.safeDrawingPadding()
-                    )
-                }
-
-                MmNavHost(
-                    navController = appState.navController,
-                    onBackClick = appState::onBackClick,
-                    modifier = Modifier
-                        .padding(padding)
-                        .consumedWindowInsets(padding)
-                )
             }
         }
     }
@@ -164,11 +186,12 @@ private fun MmNavRail(
 
 @Composable
 private fun MmBottomBar(
+    modifier: Modifier = Modifier,
     destinations: List<TopLevelDestination>,
     onNavigateToDestination: (TopLevelDestination) -> Unit,
     currentDestination: NavDestination?
 ) {
-    MmNavigationBar {
+    MmNavigationBar(modifier = modifier) {
         destinations.forEach { destination ->
             val selected = currentDestination.isTopLevelDestinationInHierarchy(destination)
             MmNavigationBarItem(
