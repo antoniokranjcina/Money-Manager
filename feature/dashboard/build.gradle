@@ -39,10 +39,20 @@ android {
 dependencies {
 
     implementation project(path: ':core:designsystem')
+    implementation project(path: ':core:ui')
+    implementation project(path: ':core:model')
+    implementation project(path: ':core:domain')
 
     // Core
     implementation "androidx.core:core-ktx:$core_ktx_version"
     implementation "androidx.lifecycle:lifecycle-runtime-ktx:$android_lifecycle_ktx_version"
+
+    // DI - Koin
+    implementation "io.insert-koin:koin-android:$koin_android_version"
+    implementation "io.insert-koin:koin-androidx-compose:$koin_android_compose_version"
+
+    // Lifecycle
+    implementation "androidx.lifecycle:lifecycle-runtime-compose:$android_lifecycle_compose_version"
 
     // UI
     implementation "androidx.activity:activity-compose:$compose_activity_version"
