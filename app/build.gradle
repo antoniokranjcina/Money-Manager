@@ -49,6 +49,8 @@ android {
 dependencies {
 
     implementation project(path: ':core:designsystem')
+    implementation project(path: ':core:database')
+
     implementation project(path: ':feature:dashboard')
     implementation project(path: ':feature:overview')
     implementation project(path: ':feature:newentry')
