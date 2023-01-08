@@ -1,7 +1,5 @@
 package com.antoniok.core.model.category
 
-import com.antoniok.core.model.CategoryColor
-
 data class ExpenseCategory(
     override val colorHex: Long,
     override val title: String,

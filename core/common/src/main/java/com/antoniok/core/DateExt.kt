@@ -1,18 +1,12 @@
 package com.antoniok.core
 
-import java.time.Instant
-import java.time.ZoneId
+import java.time.LocalDateTime
 
-fun Long.toDayMonth(): String {
-    val dt = Instant.ofEpochMilli(this)
-        .atZone(ZoneId.systemDefault())
-        .toLocalDateTime()
-    return "${dt.dayOfMonth}. ${dt.month}."
-}
+fun LocalDateTime.toDate(): String = "${this.dayOfMonth}.${this.monthValue}.${this.year}."
+fun LocalDateTime.toTime(): String = "${this.hour.addZeroBefore()}:${this.minute.addZeroBefore()}"
 
-fun Long.toDayMonthYear(): String {
-    val dt = Instant.ofEpochMilli(this)
-        .atZone(ZoneId.systemDefault())
-        .toLocalDateTime()
-    return "${dt.dayOfMonth}. ${dt.month}. ${dt.year}."
+fun Int.addZeroBefore(): String = if (this in 0..9) {
+    "0$this"
+} else {
+    "$this"
 }

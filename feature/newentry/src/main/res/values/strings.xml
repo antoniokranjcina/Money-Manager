@@ -1,6 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="add_new_entry">Add New Entry</string>
+    <string name="add_transaction">Add Transaction</string>
+
+    <string name="transaction_type_income">Income</string>
+    <string name="transaction_type_expense">Expense</string>
+    <string name="transaction_type_atm">ATM</string>
+
+    <string name="description">Description</string>
+    <string name="amount">Amount</string>
+    <string name="save">Save</string>
 
 </resources>

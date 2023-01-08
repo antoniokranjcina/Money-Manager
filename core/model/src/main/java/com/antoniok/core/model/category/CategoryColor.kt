@@ -1,4 +1,4 @@
-package com.antoniok.core.model
+package com.antoniok.core.model.category
 
 enum class CategoryColor(val hex: Long) {
     Green(hex = 0xffe7ed8b),
