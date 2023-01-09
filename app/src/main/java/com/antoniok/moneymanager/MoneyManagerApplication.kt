@@ -1,6 +1,7 @@
 package com.antoniok.moneymanager
 
 import android.app.Application
+import com.antoniok.core.data.dataModule
 import com.antoniok.core.database.databaseModule
 import com.antoniok.feature.dashboard.dashboardModule
 import com.antoniok.feature.newentry.addTransactionModule
@@ -12,7 +13,8 @@ val modules = listOf(
     // Feature
     dashboardModule,
     addTransactionModule,
-    databaseModule
+    databaseModule,
+    dataModule
 )
 
 class MoneyManagerApplication : Application() {

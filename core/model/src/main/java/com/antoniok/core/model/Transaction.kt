@@ -6,7 +6,7 @@ import com.antoniok.core.model.category.previewExpenseCategory3
 import com.antoniok.core.model.category.previewIncomeCategory2
 
 data class Transaction(
-    val id: Int,
+    val id: Long,
     val description: String,
     val moneySpent: String,
     val date: String,

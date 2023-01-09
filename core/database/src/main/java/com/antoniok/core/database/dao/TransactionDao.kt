@@ -1,6 +1,7 @@
 package com.antoniok.core.database.dao
 
 import androidx.room.Dao
+import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
@@ -21,5 +22,11 @@ interface TransactionDao {
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insertOrIgnoreTransactions(transactions: List<TransactionEntity>)
+
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    suspend fun insertOrIgnoreTransaction(transaction: TransactionEntity)
+
+    @Delete
+    suspend fun deleteTransaction(transaction: TransactionEntity)
 
 }
