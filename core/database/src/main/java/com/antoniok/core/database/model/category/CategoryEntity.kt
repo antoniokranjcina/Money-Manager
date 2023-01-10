@@ -1,50 +1,58 @@
 package com.antoniok.core.database.model.category
 
+import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import com.antoniok.core.model.category.Category
 import com.antoniok.core.model.category.ExpenseCategory
 import com.antoniok.core.model.category.IncomeCategory
 
-@Entity("category")
-open class CategoryEntity(
+@Entity(tableName = "category_table")
+data class CategoryEntity(
     @PrimaryKey(autoGenerate = true)
-    open val id: Long,
-    open val title: String,
-    open val colorHex: Long
-)
+    @ColumnInfo(name = "category_id")
+    val id: Long = 0,
+    val title: String,
+    @ColumnInfo(name = "color_hex")
+    val colorHex: Long,
+    val type: Type
+) {
 
-@Entity(tableName = "income")
-data class IncomeCategoryEntity(
-    @PrimaryKey(autoGenerate = true)
-    override val id: Long,
-    override val title: String,
-    override val colorHex: Long
-) : CategoryEntity(
-    id = id,
-    title = title,
-    colorHex = colorHex
-)
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (javaClass != other?.javaClass) return false
 
-@Entity(tableName = "expense")
-data class ExpenseCategoryEntity(
-    @PrimaryKey(autoGenerate = true)
-    override val id: Long,
-    override val title: String,
-    override val colorHex: Long
-) : CategoryEntity(
-    id = id,
-    title = title,
-    colorHex = colorHex
-)
+        other as CategoryEntity
 
-fun IncomeCategoryEntity.asExternalModel() = IncomeCategory(
-    id = id,
-    title = title,
-    colorHex = colorHex,
-)
+        if (title != other.title) return false
+        if (colorHex != other.colorHex) return false
+        if (type != other.type) return false
 
-fun ExpenseCategoryEntity.asExternalModel() = ExpenseCategory(
-    id = id,
-    title = title,
-    colorHex = colorHex,
-)
+        return true
+    }
+
+    override fun hashCode(): Int {
+        var result = title.hashCode()
+        result = 31 * result + colorHex.hashCode()
+        result = 31 * result + type.hashCode()
+        return result
+    }
+}
+
+enum class Type {
+    INCOME,
+    EXPENSE
+}
+
+fun CategoryEntity.asExternalModel(): Category = when (this.type) {
+    Type.INCOME -> IncomeCategory(
+        id = id,
+        title = title,
+        colorHex = colorHex
+    )
+    Type.EXPENSE -> ExpenseCategory(
+        id = id,
+        title = title,
+        colorHex = colorHex
+    )
+}

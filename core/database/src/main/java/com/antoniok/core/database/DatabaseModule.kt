@@ -18,5 +18,5 @@ private fun provideMmDatabase(context: Context): MmDatabase = Room.databaseBuild
     "money-manager-database"
 ).build()
 
-private fun provideTransactionDao(db: MmDatabase): TransactionDao = db.transactionDao
-private fun provideCategoryDao(db: MmDatabase): CategoryDao = db.categoryDao
+private fun provideTransactionDao(db: MmDatabase): TransactionDao = db.transactionDao()
+private fun provideCategoryDao(db: MmDatabase): CategoryDao = db.categoryDao()

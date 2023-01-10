@@ -50,6 +50,7 @@ dependencies {
 
     implementation project(path: ':core:designsystem')
     implementation project(path: ':core:database')
+    implementation project(path: ':core:data')
 
     implementation project(path: ':feature:dashboard')
     implementation project(path: ':feature:overview')

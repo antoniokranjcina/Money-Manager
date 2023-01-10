@@ -10,11 +10,11 @@ import org.koin.android.ext.koin.androidLogger
 import org.koin.core.context.startKoin
 
 val modules = listOf(
+    databaseModule,
+    dataModule,
     // Feature
     dashboardModule,
     addTransactionModule,
-    databaseModule,
-    dataModule
 )
 
 class MoneyManagerApplication : Application() {

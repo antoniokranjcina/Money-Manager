@@ -39,6 +39,7 @@ android {
 dependencies {
     implementation project(path: ':core:model')
     implementation project(path: ':core:designsystem')
+    implementation project(path: ':core:data')
 
     // Core
     implementation "androidx.core:core-ktx:$core_ktx_version"

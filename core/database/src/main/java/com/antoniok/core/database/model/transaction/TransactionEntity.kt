@@ -1,21 +1,23 @@
 package com.antoniok.core.database.model.transaction
 
+import androidx.room.ColumnInfo
 import androidx.room.Embedded
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.antoniok.core.database.model.category.CategoryEntity
-import com.antoniok.core.database.model.category.ExpenseCategoryEntity
-import com.antoniok.core.database.model.category.IncomeCategoryEntity
 import com.antoniok.core.database.model.category.asExternalModel
 import com.antoniok.core.model.Transaction
+import java.time.LocalDateTime
 
-@Entity(tableName = "transaction")
+@Entity(tableName = "transaction_table")
 data class TransactionEntity(
     @PrimaryKey(autoGenerate = true)
-    val id: Long,
+    @ColumnInfo(name = "id")
+    val id: Long = 0,
     val description: String,
-    val moneySpent: Double,
-    val date: Long,
+    @ColumnInfo(name = "amount")
+    val amount: Double,
+    val date: LocalDateTime,
     @Embedded
     val category: CategoryEntity
 )
@@ -23,17 +25,7 @@ data class TransactionEntity(
 fun TransactionEntity.asExternalModel() = Transaction(
     id = id,
     description = description,
-    moneySpent = moneySpent.toString(),
-    date = date.toString(),
-    category = when (category) {
-        is IncomeCategoryEntity -> {
-            category.asExternalModel()
-        }
-        is ExpenseCategoryEntity -> {
-            category.asExternalModel()
-        }
-        else -> {
-            throw Exception("Wrong parent type.")
-        }
-    }
+    amount = amount,
+    date = date,
+    category = category.asExternalModel()
 )

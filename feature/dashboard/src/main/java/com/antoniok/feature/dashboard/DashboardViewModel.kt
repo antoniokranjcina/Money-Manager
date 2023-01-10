@@ -2,9 +2,9 @@ package com.antoniok.feature.dashboard
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.antoniok.core.data.repository.TransactionRepository
 import com.antoniok.core.domain.model.previewCategoriesWithValues
 import com.antoniok.core.model.previewMonthlyStatus
-import com.antoniok.core.model.previewTransactions
 import com.antoniok.core.ui.LastTransactionsUiState
 import com.antoniok.core.ui.MonthlyStatusUiState
 import com.antoniok.core.ui.PieChartUiState
@@ -12,10 +12,14 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.flow.take
 
 
-class DashboardViewModel : ViewModel() {
+class DashboardViewModel(
+    private val transactionRepository: TransactionRepository
+) : ViewModel() {
 
     // This is just dummy flow, representing what will be represented to UI
     val monthlyStatusUiState: StateFlow<MonthlyStatusUiState> = flow {
@@ -42,16 +46,17 @@ class DashboardViewModel : ViewModel() {
             initialValue = PieChartUiState.Loading
         )
 
-    // This is just dummy flow, representing what will be represented to UI
-    val lastTransactionsUiState: StateFlow<LastTransactionsUiState> = flow {
-        emit(LastTransactionsUiState.Loading)
-        delay(1_200)
-        emit(LastTransactionsUiState.Success(previewTransactions))
-    }
-        .stateIn(
-            scope = viewModelScope,
-            started = SharingStarted.WhileSubscribed(5_000),
-            initialValue = LastTransactionsUiState.Loading
-        )
+    val lastTransactionsUiState: StateFlow<LastTransactionsUiState> =
+
+        transactionRepository.getTransactions()
+            .take(3)
+            .map {
+                LastTransactionsUiState.Success(it)
+            }
+            .stateIn(
+                scope = viewModelScope,
+                started = SharingStarted.WhileSubscribed(5_000),
+                initialValue = LastTransactionsUiState.Loading
+            )
 
 }

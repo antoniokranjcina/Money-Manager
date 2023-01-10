@@ -6,10 +6,9 @@ import com.antoniok.core.model.category.ExpenseCategory
 import com.antoniok.core.model.category.IncomeCategory
 
 fun Transaction.asEntity() = TransactionEntity(
-    id = id,
     description = description,
-    moneySpent = moneySpent.toDouble(),
-    date = date.toLong(),
+    amount = amount,
+    date = date,
     category = when (category) {
         is IncomeCategory -> {
             (category as IncomeCategory).asEntity()

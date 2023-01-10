@@ -11,13 +11,13 @@ import kotlinx.coroutines.flow.Flow
 @Dao
 interface TransactionDao {
 
-    @Query("SELECT * FROM transaction WHERE id= :id")
+    @Query("SELECT * FROM transaction_table WHERE id= :id")
     fun getTransactionEntity(id: Long): Flow<TransactionEntity>
 
-    @Query("SELECT * FROM transaction")
+    @Query("SELECT * FROM transaction_table")
     fun getTransactionEntities(): Flow<List<TransactionEntity>>
 
-    @Query("SELECT * FROM topics WHERE id IN (:ids)")
+    @Query("SELECT * FROM transaction_table WHERE id IN (:ids)")
     fun getTransactionEntities(ids: Set<Long>): Flow<List<TransactionEntity>>
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)

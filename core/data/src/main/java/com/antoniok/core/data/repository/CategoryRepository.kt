@@ -1,18 +1,16 @@
 package com.antoniok.core.data.repository
 
-import com.antoniok.core.model.category.Category
-import com.antoniok.core.model.category.ExpenseCategory
-import com.antoniok.core.model.category.IncomeCategory
+import com.antoniok.core.database.model.category.CategoryEntity
 import kotlinx.coroutines.flow.Flow
 
 interface CategoryRepository {
 
-    fun getIncomeCategories(): Flow<List<IncomeCategory>>
+    fun getCategories(): Flow<List<CategoryEntity>>
 
-    fun getExpenseCategories(): Flow<List<ExpenseCategory>>
+    fun getCategoryByTitle(title: String): Flow<CategoryEntity?>
 
-    suspend fun deleteCategory(category: Category)
+    suspend fun deleteCategory(category: CategoryEntity)
 
-    suspend fun insertCategory(category: Category)
+    suspend fun insertCategory(category: CategoryEntity)
 
 }
