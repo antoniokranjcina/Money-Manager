@@ -2,8 +2,8 @@ package com.antoniok.feature.dashboard
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.antoniok.core.data.repository.TransactionRepository
 import com.antoniok.core.domain.model.previewCategoriesWithValues
+import com.antoniok.core.domain.usecase.transaction.GetTransactionsUseCase
 import com.antoniok.core.model.previewMonthlyStatus
 import com.antoniok.core.ui.LastTransactionsUiState
 import com.antoniok.core.ui.MonthlyStatusUiState
@@ -18,7 +18,7 @@ import kotlinx.coroutines.flow.take
 
 
 class DashboardViewModel(
-    private val transactionRepository: TransactionRepository
+    getTransactionsUseCase: GetTransactionsUseCase
 ) : ViewModel() {
 
     // This is just dummy flow, representing what will be represented to UI
@@ -48,7 +48,7 @@ class DashboardViewModel(
 
     val lastTransactionsUiState: StateFlow<LastTransactionsUiState> =
 
-        transactionRepository.getTransactions()
+        getTransactionsUseCase.invoke()
             .take(3)
             .map {
                 LastTransactionsUiState.Success(it)
