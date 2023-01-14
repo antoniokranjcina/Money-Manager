@@ -7,11 +7,11 @@ import com.antoniok.core.model.Transaction
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 
-class GetTransactionsUseCase(
+class GetLastTransactionsUseCase(
     private val transactionRepository: TransactionRepository
 ) {
 
-    operator fun invoke(): Flow<List<Transaction>> = transactionRepository.getTransactions()
+    operator fun invoke(): Flow<List<Transaction>> = transactionRepository.getLastTransactions()
         .map { transactions ->
             transactions.map(TransactionEntity::asExternalModel)
         }

@@ -10,6 +10,8 @@ interface TransactionRepository {
 
     fun getTransactions(currentMonth: Date): Flow<List<TransactionEntity>>
 
+    fun getLastTransactions(): Flow<List<TransactionEntity>>
+
     fun getTransaction(id: Long): Flow<TransactionEntity>
 
     suspend fun insertTransaction(transaction: TransactionEntity)

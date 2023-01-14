@@ -60,6 +60,7 @@ fun DateTimePicker(
             Text(
                 textAlign = TextAlign.Center,
                 text = stringResource(R.string.date),
+                color = MaterialTheme.colorScheme.onBackground,
                 style = MaterialTheme.typography.labelLarge
             )
         }
@@ -81,6 +82,7 @@ fun DateTimePicker(
                 Text(
                     textAlign = TextAlign.Center,
                     text = dateTime.value.toDate(),
+                    color = MaterialTheme.colorScheme.onBackground,
                     style = MaterialTheme.typography.labelLarge
                 )
             }
@@ -96,6 +98,7 @@ fun DateTimePicker(
                 Text(
                     textAlign = TextAlign.Center,
                     text = dateTime.value.toTime(),
+                    color = MaterialTheme.colorScheme.onBackground,
                     style = MaterialTheme.typography.labelLarge
                 )
             }

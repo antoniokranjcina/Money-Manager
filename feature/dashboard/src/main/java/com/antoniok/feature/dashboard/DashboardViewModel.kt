@@ -3,7 +3,7 @@ package com.antoniok.feature.dashboard
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.antoniok.core.domain.model.previewCategoriesWithValues
-import com.antoniok.core.domain.usecase.transaction.GetTransactionsUseCase
+import com.antoniok.core.domain.usecase.transaction.GetLastTransactionsUseCase
 import com.antoniok.core.model.previewMonthlyStatus
 import com.antoniok.core.ui.LastTransactionsUiState
 import com.antoniok.core.ui.MonthlyStatusUiState
@@ -14,11 +14,10 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
-import kotlinx.coroutines.flow.take
 
 
 class DashboardViewModel(
-    getTransactionsUseCase: GetTransactionsUseCase
+    getLastTransactionsUseCase: GetLastTransactionsUseCase
 ) : ViewModel() {
 
     // This is just dummy flow, representing what will be represented to UI
@@ -47,9 +46,14 @@ class DashboardViewModel(
         )
 
     val lastTransactionsUiState: StateFlow<LastTransactionsUiState> =
-        getTransactionsUseCase.invoke()
-            .take(3)
-            .map { LastTransactionsUiState.Success(it) }
+        getLastTransactionsUseCase.invoke()
+            .map {
+                if (it.isEmpty()) {
+                    LastTransactionsUiState.Empty
+                } else {
+                    LastTransactionsUiState.Success(it)
+                }
+            }
             .stateIn(
                 scope = viewModelScope,
                 started = SharingStarted.WhileSubscribed(5_000),

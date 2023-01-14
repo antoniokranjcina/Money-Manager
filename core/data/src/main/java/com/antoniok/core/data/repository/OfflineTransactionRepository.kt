@@ -15,6 +15,9 @@ class OfflineTransactionRepository(
     override fun getTransactions(currentMonth: Date): Flow<List<TransactionEntity>> =
         transactionDao.getTransactionEntitiesByCurrentMonth(currentMonth)
 
+    override fun getLastTransactions(): Flow<List<TransactionEntity>> =
+        transactionDao.getLastTransactionEntities()
+
     override fun getTransaction(id: Long): Flow<TransactionEntity> =
         transactionDao.getTransactionEntity(id)
 

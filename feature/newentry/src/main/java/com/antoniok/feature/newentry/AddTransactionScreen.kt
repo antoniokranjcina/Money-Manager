@@ -147,7 +147,10 @@ internal fun AddTransactionScreen(
         )
         Spacer16()
         Button(
-            modifier = Modifier.align(Alignment.CenterHorizontally),
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(start = Padding.Medium, end = Padding.Medium)
+                .align(Alignment.CenterHorizontally),
             onClick = {
                 saveTransaction(
                     selectedCategory.value,

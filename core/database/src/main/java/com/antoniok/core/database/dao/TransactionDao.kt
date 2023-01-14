@@ -18,11 +18,16 @@ interface TransactionDao {
     @Query("SELECT * FROM transaction_table")
     fun getTransactionEntities(): Flow<List<TransactionEntity>>
 
-    @Query("SELECT * FROM transaction_table WHERE datetime(date/1000,'unixepoch','start of month') = datetime(:currentMonth/1000,'unixepoch','start of month')")
+    @Query(
+        """SELECT * FROM transaction_table 
+        WHERE datetime(date/1000,'unixepoch','start of month') = datetime(:currentMonth/1000,'unixepoch','start of month') 
+        ORDER BY date DESC
+        """
+    )
     fun getTransactionEntitiesByCurrentMonth(currentMonth: Date): Flow<List<TransactionEntity>>
 
-    @Query("SELECT * FROM transaction_table WHERE datetime(date/1000,'unixepoch','start of month') = :currentMonth")
-    fun getTransactionEntitiesByCurrentMonth(currentMonth: Int): Flow<List<TransactionEntity>>
+    @Query("SELECT * FROM transaction_table ORDER BY date DESC LIMIT 3")
+    fun getLastTransactionEntities(): Flow<List<TransactionEntity>>
 
     @Query("SELECT * FROM transaction_table WHERE id IN (:ids)")
     fun getTransactionEntities(ids: Set<Long>): Flow<List<TransactionEntity>>
