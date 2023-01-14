@@ -7,7 +7,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.antoniok.core.domain.usecase.transaction.InsertTransactionUseCase
 import com.antoniok.core.model.Transaction
-import com.antoniok.core.model.category.IncomeCategory
+import com.antoniok.core.model.TransactionType
+import com.antoniok.core.model.category.Category
 import com.antoniok.core.model.category.TransactionTypeWithCategories
 import com.antoniok.core.model.category.previewTypeWithCategories
 import kotlinx.coroutines.flow.Flow
@@ -19,19 +20,20 @@ val typeWithCategories: Flow<List<TransactionTypeWithCategories>> = flow {
     emit(previewTypeWithCategories)
 }
 
-private const val TAG = "AddTransactionViewModel"
-
-private val getType = listOf("Income", "Expense", "ATM")
-
 class AddTransactionViewModel(
-    private val insertTransactionUseCase: InsertTransactionUseCase
+    private val insertTransactionUseCase: InsertTransactionUseCase,
 ) : ViewModel() {
 
-    val transactionTypes by mutableStateOf(getType)
+    val transactionTypes by mutableStateOf(
+        listOf(
+            TransactionType.EXPENSE,
+            TransactionType.INCOME
+        )
+    )
 
-    var categories by mutableStateOf(listOf<String>())
+    var categories by mutableStateOf(listOf<Category>())
 
-    fun getCategories(type: String) {
+    fun getCategories(type: TransactionType) {
         viewModelScope.launch {
             typeWithCategories.collect {
                 for (i in it) {
@@ -44,8 +46,7 @@ class AddTransactionViewModel(
     }
 
     fun saveTransaction(
-        type: String,
-        category: String,
+        category: Category,
         description: String,
         amount: Double,
         date: LocalDateTime
@@ -57,11 +58,7 @@ class AddTransactionViewModel(
                     description = description,
                     amount = amount,
                     date = date,
-                    category = IncomeCategory(
-                        id = 0,
-                        colorHex = 0,
-                        title = category
-                    )
+                    category = category
                 )
             )
         }

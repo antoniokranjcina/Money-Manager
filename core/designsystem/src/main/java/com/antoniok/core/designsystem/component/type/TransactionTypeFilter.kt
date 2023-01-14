@@ -16,12 +16,13 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.antoniok.core.model.TransactionType
 
 @Composable
 fun TransactionTypeFilter(
     modifier: Modifier = Modifier,
-    types: List<String>,
-    selectedType: MutableState<String>
+    types: List<TransactionType>,
+    selectedType: MutableState<TransactionType>
 ) {
     Card(
         modifier = modifier.fillMaxWidth(),
@@ -41,7 +42,14 @@ fun TransactionTypeFilter(
                     TransactionTypeSelector(
                         modifier = Modifier.fillMaxSize(),
                         isSelected = selectedType.value == types[index],
-                        text = type
+                        text = when (type) {
+                            TransactionType.INCOME -> {
+                                "Income"
+                            }
+                            TransactionType.EXPENSE -> {
+                                "Expense"
+                            }
+                        }
                     )
                 }
             }
@@ -53,7 +61,7 @@ fun TransactionTypeFilter(
 @Composable
 private fun TransactionTypeFilterPreview() {
     TransactionTypeFilter(
-        types = listOf("Expense", "Income"),
-        selectedType = remember { mutableStateOf("Expense") }
+        types = listOf(TransactionType.EXPENSE, TransactionType.INCOME),
+        selectedType = remember { mutableStateOf(TransactionType.EXPENSE) }
     )
 }

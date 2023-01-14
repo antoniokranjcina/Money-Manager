@@ -30,6 +30,9 @@ import com.antoniok.core.designsystem.component.time.DateTimePicker
 import com.antoniok.core.designsystem.component.type.TransactionTypeFilter
 import com.antoniok.core.designsystem.icon.MmIcons
 import com.antoniok.core.designsystem.theme.Padding
+import com.antoniok.core.model.TransactionType
+import com.antoniok.core.model.category.Category
+import com.antoniok.core.model.category.IncomeCategory
 import org.koin.androidx.compose.getViewModel
 import java.time.LocalDateTime
 
@@ -42,14 +45,13 @@ fun AddTransactionRoute(
     AddTransactionScreen(
         modifier = modifier,
         onBackPressed = onBackPressed,
-        types = addTransactionViewModel.transactionTypes,
+        type = addTransactionViewModel.transactionTypes,
         getCategories = {
             addTransactionViewModel.getCategories(it)
             addTransactionViewModel.categories
         },
-        saveTransaction = { type, category, description, amount, date ->
+        saveTransaction = { category, description, amount, date ->
             addTransactionViewModel.saveTransaction(
-                type = type,
                 category = category,
                 description = description,
                 amount = amount,
@@ -64,17 +66,16 @@ fun AddTransactionRoute(
 internal fun AddTransactionScreen(
     modifier: Modifier = Modifier,
     onBackPressed: () -> Unit,
-    types: List<String>,
-    getCategories: (type: String) -> List<String>,
+    type: List<TransactionType>,
+    getCategories: (type: TransactionType) -> List<Category>,
     saveTransaction: (
-        type: String,
-        category: String,
+        category: Category,
         description: String,
         amount: Double,
         date: LocalDateTime
     ) -> Unit
 ) {
-    val selectedType = remember { mutableStateOf(types[1]) }
+    val selectedType = remember { mutableStateOf(type[0]) }
     val selectedCategory = remember(getCategories(selectedType.value)) {
         mutableStateOf(getCategories(selectedType.value)[0])
     }
@@ -96,7 +97,7 @@ internal fun AddTransactionScreen(
         Spacer16()
         TransactionTypeFilter(
             modifier = Modifier.padding(start = Padding.Medium, end = Padding.Medium),
-            types = types,
+            types = type,
             selectedType = selectedType
         )
         Spacer16()
@@ -149,7 +150,6 @@ internal fun AddTransactionScreen(
             modifier = Modifier.align(Alignment.CenterHorizontally),
             onClick = {
                 saveTransaction(
-                    selectedType.value,
                     selectedCategory.value,
                     description.text,
                     amount.text.toDouble(),
@@ -168,8 +168,16 @@ internal fun AddTransactionScreen(
 private fun AddTransactionScreenPreview() {
     AddTransactionScreen(
         onBackPressed = {},
-        types = listOf(""),
-        getCategories = { listOf("") },
-        saveTransaction = { _, _, _, _, _ -> }
+        type = listOf(TransactionType.INCOME, TransactionType.EXPENSE),
+        getCategories = {
+            listOf(
+                IncomeCategory(
+                    id = 0,
+                    colorHex = 1,
+                    title = "Car"
+                )
+            )
+        },
+        saveTransaction = { _, _, _, _ -> }
     )
 }

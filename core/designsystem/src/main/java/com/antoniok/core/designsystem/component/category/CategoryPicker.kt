@@ -18,13 +18,15 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import com.antoniok.core.designsystem.R
+import com.antoniok.core.model.category.Category
+import com.antoniok.core.model.category.previewIncomeCategory2
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun CategoryPicker(
     modifier: Modifier = Modifier,
-    categories: List<String>,
-    selectedCategory: MutableState<String>
+    categories: List<Category>,
+    selectedCategory: MutableState<Category>
 ) {
     var expanded by remember { mutableStateOf(false) }
 
@@ -38,8 +40,13 @@ fun CategoryPicker(
                 .fillMaxWidth()
                 .menuAnchor(),
             readOnly = true,
-            value = selectedCategory.value,
-            onValueChange = { selectedCategory.value = it },
+            value = selectedCategory.value.title,
+            onValueChange = { title ->
+                val newSelectedCategory = categories.find { it.title == title }
+                newSelectedCategory?.let {
+                    selectedCategory.value = it
+                }
+            },
             label = {
                 Text(
                     text = stringResource(id = R.string.categories),
@@ -63,7 +70,7 @@ fun CategoryPicker(
                     },
                     text = {
                         Text(
-                            text = selectionOption,
+                            text = selectionOption.title,
                             style = MaterialTheme.typography.labelLarge
                         )
                     }
@@ -77,7 +84,7 @@ fun CategoryPicker(
 @Composable
 private fun CategoryPickerPreview() {
     CategoryPicker(
-        categories = listOf("Car", "Shopping", "Shoes", "Football"),
-        selectedCategory = remember { mutableStateOf("Car") }
+        categories = listOf(previewIncomeCategory2, previewIncomeCategory2),
+        selectedCategory = remember { mutableStateOf(previewIncomeCategory2) }
     )
 }
