@@ -1,11 +1,13 @@
 package com.antoniok.feature.newentry
 
-import android.util.Log
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.antoniok.core.domain.usecase.transaction.InsertTransactionUseCase
+import com.antoniok.core.model.Transaction
+import com.antoniok.core.model.category.IncomeCategory
 import com.antoniok.core.model.category.TransactionTypeWithCategories
 import com.antoniok.core.model.category.previewTypeWithCategories
 import kotlinx.coroutines.flow.Flow
@@ -21,7 +23,9 @@ private const val TAG = "AddTransactionViewModel"
 
 private val getType = listOf("Income", "Expense", "ATM")
 
-class AddTransactionViewModel : ViewModel() {
+class AddTransactionViewModel(
+    private val insertTransactionUseCase: InsertTransactionUseCase
+) : ViewModel() {
 
     val transactionTypes by mutableStateOf(getType)
 
@@ -46,11 +50,21 @@ class AddTransactionViewModel : ViewModel() {
         amount: Double,
         date: LocalDateTime
     ) {
-        Log.d(TAG, "saveTransaction: $type")
-        Log.d(TAG, "saveTransaction: $category")
-        Log.d(TAG, "saveTransaction: $description")
-        Log.d(TAG, "saveTransaction: $amount")
-        Log.d(TAG, "saveTransaction: $date")
+        viewModelScope.launch {
+            insertTransactionUseCase.invoke(
+                Transaction(
+                    id = 0,
+                    description = description,
+                    amount = amount,
+                    date = date,
+                    category = IncomeCategory(
+                        id = 0,
+                        colorHex = 0,
+                        title = category
+                    )
+                )
+            )
+        }
     }
 
 }

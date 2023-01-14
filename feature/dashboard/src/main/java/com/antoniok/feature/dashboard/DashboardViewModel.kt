@@ -47,12 +47,9 @@ class DashboardViewModel(
         )
 
     val lastTransactionsUiState: StateFlow<LastTransactionsUiState> =
-
         getTransactionsUseCase.invoke()
             .take(3)
-            .map {
-                LastTransactionsUiState.Success(it)
-            }
+            .map { LastTransactionsUiState.Success(it) }
             .stateIn(
                 scope = viewModelScope,
                 started = SharingStarted.WhileSubscribed(5_000),

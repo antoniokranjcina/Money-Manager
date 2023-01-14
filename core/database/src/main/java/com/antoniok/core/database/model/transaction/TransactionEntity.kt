@@ -8,6 +8,8 @@ import com.antoniok.core.database.model.category.CategoryEntity
 import com.antoniok.core.database.model.category.asExternalModel
 import com.antoniok.core.model.Transaction
 import java.time.LocalDateTime
+import java.time.ZoneId
+import java.util.Date
 
 @Entity(tableName = "transaction_table")
 data class TransactionEntity(
@@ -17,7 +19,7 @@ data class TransactionEntity(
     val description: String,
     @ColumnInfo(name = "amount")
     val amount: Double,
-    val date: LocalDateTime,
+    val date: Date,
     @Embedded
     val category: CategoryEntity
 )
@@ -26,6 +28,6 @@ fun TransactionEntity.asExternalModel() = Transaction(
     id = id,
     description = description,
     amount = amount,
-    date = date,
+    date = LocalDateTime.ofInstant(date.toInstant(), ZoneId.systemDefault()),
     category = category.asExternalModel()
 )

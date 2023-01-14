@@ -1,18 +1,14 @@
 package com.antoniok.core.database
 
 import androidx.room.TypeConverter
-import java.time.LocalDateTime
-import java.time.ZoneOffset
+import java.util.Date
 
 class Converter {
 
     @TypeConverter
-    fun toLocalDateTime(value: Long): LocalDateTime =
-        LocalDateTime.ofEpochSecond(value, 0, ZoneOffset.UTC)
+    fun fromTimestamp(value: Long?): Date? = value?.let { Date(it) }
 
     @TypeConverter
-    fun fromLocalDateTime(date: LocalDateTime): Long =
-        date.toEpochSecond(ZoneOffset.UTC)
-
+    fun dateToTimestamp(date: Date?): Long? = date?.time
 
 }

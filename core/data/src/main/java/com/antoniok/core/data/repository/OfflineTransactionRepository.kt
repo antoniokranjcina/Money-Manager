@@ -3,6 +3,7 @@ package com.antoniok.core.data.repository
 import com.antoniok.core.database.dao.TransactionDao
 import com.antoniok.core.database.model.transaction.TransactionEntity
 import kotlinx.coroutines.flow.Flow
+import java.util.Date
 
 class OfflineTransactionRepository(
     private val transactionDao: TransactionDao
@@ -10,6 +11,9 @@ class OfflineTransactionRepository(
 
     override fun getTransactions(): Flow<List<TransactionEntity>> =
         transactionDao.getTransactionEntities()
+
+    override fun getTransactions(currentMonth: Date): Flow<List<TransactionEntity>> =
+        transactionDao.getTransactionEntitiesByCurrentMonth(currentMonth)
 
     override fun getTransaction(id: Long): Flow<TransactionEntity> =
         transactionDao.getTransactionEntity(id)

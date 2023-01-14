@@ -7,6 +7,7 @@ import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import com.antoniok.core.database.model.transaction.TransactionEntity
 import kotlinx.coroutines.flow.Flow
+import java.util.Date
 
 @Dao
 interface TransactionDao {
@@ -16,6 +17,12 @@ interface TransactionDao {
 
     @Query("SELECT * FROM transaction_table")
     fun getTransactionEntities(): Flow<List<TransactionEntity>>
+
+    @Query("SELECT * FROM transaction_table WHERE datetime(date/1000,'unixepoch','start of month') = datetime(:currentMonth/1000,'unixepoch','start of month')")
+    fun getTransactionEntitiesByCurrentMonth(currentMonth: Date): Flow<List<TransactionEntity>>
+
+    @Query("SELECT * FROM transaction_table WHERE datetime(date/1000,'unixepoch','start of month') = :currentMonth")
+    fun getTransactionEntitiesByCurrentMonth(currentMonth: Int): Flow<List<TransactionEntity>>
 
     @Query("SELECT * FROM transaction_table WHERE id IN (:ids)")
     fun getTransactionEntities(ids: Set<Long>): Flow<List<TransactionEntity>>
