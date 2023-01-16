@@ -6,6 +6,7 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.antoniok.core.domain.usecase.category.GetCategoriesWithTypeUseCase
+import com.antoniok.core.domain.usecase.category.InsertCategoryUseCase
 import com.antoniok.core.domain.usecase.transaction.InsertTransactionUseCase
 import com.antoniok.core.model.Transaction
 import com.antoniok.core.model.TransactionType
@@ -15,7 +16,8 @@ import java.time.LocalDateTime
 
 class AddTransactionViewModel(
     private val insertTransactionUseCase: InsertTransactionUseCase,
-    private val getCategoriesWithTypeUseCase: GetCategoriesWithTypeUseCase
+    private val getCategoriesWithTypeUseCase: GetCategoriesWithTypeUseCase,
+    private val insertCategoryUseCase: InsertCategoryUseCase
 ) : ViewModel() {
 
     var transactionTypes = mutableStateOf<List<TransactionType>>(emptyList())
@@ -36,7 +38,7 @@ class AddTransactionViewModel(
         }
     }
 
-    fun saveTransaction(
+    fun insertTransaction(
         category: Category,
         description: String,
         amount: Double,
@@ -52,6 +54,12 @@ class AddTransactionViewModel(
                     category = category
                 )
             )
+        }
+    }
+
+    fun insertCategory(category: Category) {
+        viewModelScope.launch {
+
         }
     }
 

@@ -10,5 +10,6 @@
     <string name="description">Description</string>
     <string name="amount">Amount</string>
     <string name="save">Save</string>
+    <string name="insert_category">Insert Category</string>
 
 </resources>

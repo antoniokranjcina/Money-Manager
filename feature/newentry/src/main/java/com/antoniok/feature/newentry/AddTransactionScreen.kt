@@ -1,11 +1,15 @@
 package com.antoniok.feature.newentry
 
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TopAppBarDefaults
@@ -28,6 +32,7 @@ import com.antoniok.core.designsystem.component.category.CategoryPicker
 import com.antoniok.core.designsystem.component.spacer.Spacer16
 import com.antoniok.core.designsystem.component.time.DateTimePicker
 import com.antoniok.core.designsystem.component.type.TransactionTypeFilter
+import com.antoniok.core.designsystem.icon.MmIcon
 import com.antoniok.core.designsystem.icon.MmIcons
 import com.antoniok.core.designsystem.theme.Padding
 import com.antoniok.core.model.TransactionType
@@ -53,8 +58,8 @@ fun AddTransactionRoute(
                 categories.ifEmpty { listOf(EmptyCategory()) }
             }
         },
-        saveTransaction = { category, description, amount, date ->
-            addTransactionViewModel.saveTransaction(
+        insertTransaction = { category, description, amount, date ->
+            addTransactionViewModel.insertTransaction(
                 category = category,
                 description = description,
                 amount = amount,
@@ -71,7 +76,7 @@ internal fun AddTransactionScreen(
     onBackPressed: () -> Unit,
     type: List<TransactionType>,
     getCategories: (type: TransactionType) -> List<Category>,
-    saveTransaction: (
+    insertTransaction: (
         category: Category,
         description: String,
         amount: Double,
@@ -104,16 +109,37 @@ internal fun AddTransactionScreen(
             selectedType = selectedType
         )
         Spacer16()
-        with(getCategories(selectedType.value)) {
-            if (this.isNotEmpty()) {
-                CategoryPicker(
-                    modifier = Modifier.padding(start = Padding.Medium, end = Padding.Medium),
-                    categories = this,
-                    selectedCategory = selectedCategory,
-                )
-                Spacer16()
+
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(start = Padding.Medium, end = Padding.Medium),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            with(getCategories(selectedType.value)) {
+                if (this.isNotEmpty()) {
+                    CategoryPicker(
+                        modifier = Modifier.weight(1f),
+                        categories = this,
+                        selectedCategory = selectedCategory,
+                    )
+                }
             }
+            IconButton(
+                onClick = {
+                    //
+                },
+                content = {
+                    Icon(
+                        imageVector = MmIcon.ImageVectorIcon(MmIcons.Add).imageVector,
+                        contentDescription = null,
+                        tint = MaterialTheme.colorScheme.onSurface
+                    )
+                }
+            )
         }
+        Spacer16()
+
         TextField(
             modifier = Modifier
                 .fillMaxWidth()
@@ -151,7 +177,7 @@ internal fun AddTransactionScreen(
                 .padding(start = Padding.Medium, end = Padding.Medium)
                 .align(Alignment.CenterHorizontally),
             onClick = {
-                saveTransaction(
+                insertTransaction(
                     selectedCategory.value,
                     description.text,
                     amount.text.toDouble(),
@@ -180,6 +206,6 @@ private fun AddTransactionScreenPreview() {
                 )
             )
         },
-        saveTransaction = { _, _, _, _ -> }
+        insertTransaction = { _, _, _, _ -> }
     )
 }
