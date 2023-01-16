@@ -25,7 +25,6 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.core.text.isDigitsOnly
 import com.antoniok.core.designsystem.component.MmTopAppBar
 import com.antoniok.core.designsystem.component.TopAppBarIconType
 import com.antoniok.core.designsystem.component.category.CategoryPicker
@@ -38,7 +37,7 @@ import com.antoniok.core.designsystem.theme.Padding
 import com.antoniok.core.model.TransactionType
 import com.antoniok.core.model.category.Category
 import com.antoniok.core.model.category.EmptyCategory
-import com.antoniok.core.model.category.IncomeCategory
+import com.antoniok.core.model.category.previewIncomeCategory1
 import org.koin.androidx.compose.getViewModel
 import java.time.LocalDateTime
 
@@ -109,7 +108,6 @@ internal fun AddTransactionScreen(
             selectedType = selectedType
         )
         Spacer16()
-
         Row(
             modifier = Modifier
                 .fillMaxWidth()
@@ -139,7 +137,6 @@ internal fun AddTransactionScreen(
             )
         }
         Spacer16()
-
         TextField(
             modifier = Modifier
                 .fillMaxWidth()
@@ -184,7 +181,9 @@ internal fun AddTransactionScreen(
                     dateTime.value
                 )
             },
-            enabled = amount.text.isNotEmpty() && amount.text.isDigitsOnly()
+            enabled = amount.text.isNotEmpty() &&
+                    amount.text.toDoubleOrNull() != null &&
+                    selectedCategory.value != EmptyCategory()
         ) {
             Text(text = stringResource(R.string.save))
         }
@@ -197,15 +196,7 @@ private fun AddTransactionScreenPreview() {
     AddTransactionScreen(
         onBackPressed = {},
         type = listOf(TransactionType.INCOME, TransactionType.EXPENSE),
-        getCategories = {
-            listOf(
-                IncomeCategory(
-                    id = 0,
-                    colorHex = 1,
-                    title = "Car"
-                )
-            )
-        },
+        getCategories = { listOf(previewIncomeCategory1) },
         insertTransaction = { _, _, _, _ -> }
     )
 }

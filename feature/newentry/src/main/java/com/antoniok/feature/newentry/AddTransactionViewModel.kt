@@ -24,10 +24,7 @@ class AddTransactionViewModel(
     var categories by mutableStateOf(listOf<Category>())
 
     init {
-        transactionTypes.value = listOf(
-            TransactionType.INCOME,
-            TransactionType.EXPENSE
-        )
+        transactionTypes.value = enumValues<TransactionType>().toList()
     }
 
     fun getCategories(type: TransactionType) {
@@ -59,7 +56,7 @@ class AddTransactionViewModel(
 
     fun insertCategory(category: Category) {
         viewModelScope.launch {
-
+            insertCategoryUseCase.invoke(category)
         }
     }
 
