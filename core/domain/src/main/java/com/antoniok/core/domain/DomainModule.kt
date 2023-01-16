@@ -2,6 +2,7 @@ package com.antoniok.core.domain
 
 import com.antoniok.core.data.repository.CategoryRepository
 import com.antoniok.core.data.repository.TransactionRepository
+import com.antoniok.core.domain.usecase.category.GetCategoriesWithTypeUseCase
 import com.antoniok.core.domain.usecase.category.GetExpenseCategoriesUseCase
 import com.antoniok.core.domain.usecase.category.GetIncomeCategoriesUseCase
 import com.antoniok.core.domain.usecase.category.InsertCategoryUseCase
@@ -14,6 +15,7 @@ val domainModule = module {
     single { provideInsertTransactionUseCase(get()) }
     single { provideGetExpenseCategoriesUseCase(get()) }
     single { provideGetIncomeCategoriesUseCase(get()) }
+    single { provideGetCategoriesWithTypeUseCase(get(), get()) }
     single { provideGetInsertCategoryUseCase(get()) }
 }
 
@@ -28,6 +30,11 @@ private fun provideGetExpenseCategoriesUseCase(categoryRepository: CategoryRepos
 
 private fun provideGetIncomeCategoriesUseCase(categoryRepository: CategoryRepository) =
     GetIncomeCategoriesUseCase(categoryRepository)
+
+private fun provideGetCategoriesWithTypeUseCase(
+    expenseCategoriesUseCase: GetExpenseCategoriesUseCase,
+    incomeCategoriesUseCase: GetIncomeCategoriesUseCase
+) = GetCategoriesWithTypeUseCase(expenseCategoriesUseCase, incomeCategoriesUseCase)
 
 private fun provideGetInsertCategoryUseCase(categoryRepository: CategoryRepository) =
     InsertCategoryUseCase(categoryRepository)

@@ -64,6 +64,7 @@ fun CategoryPicker(
         ) {
             categories.forEach { selectionOption ->
                 DropdownMenuItem(
+                    modifier = Modifier.fillMaxWidth(),
                     onClick = {
                         selectedCategory.value = selectionOption
                         expanded = false

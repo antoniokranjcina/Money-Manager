@@ -32,6 +32,7 @@ import com.antoniok.core.designsystem.icon.MmIcons
 import com.antoniok.core.designsystem.theme.Padding
 import com.antoniok.core.model.TransactionType
 import com.antoniok.core.model.category.Category
+import com.antoniok.core.model.category.EmptyCategory
 import com.antoniok.core.model.category.IncomeCategory
 import org.koin.androidx.compose.getViewModel
 import java.time.LocalDateTime
@@ -45,10 +46,12 @@ fun AddTransactionRoute(
     AddTransactionScreen(
         modifier = modifier,
         onBackPressed = onBackPressed,
-        type = addTransactionViewModel.transactionTypes,
+        type = addTransactionViewModel.transactionTypes.value,
         getCategories = {
             addTransactionViewModel.getCategories(it)
-            addTransactionViewModel.categories
+            addTransactionViewModel.categories.let { categories ->
+                categories.ifEmpty { listOf(EmptyCategory()) }
+            }
         },
         saveTransaction = { category, description, amount, date ->
             addTransactionViewModel.saveTransaction(
@@ -116,9 +119,7 @@ internal fun AddTransactionScreen(
                 .fillMaxWidth()
                 .padding(start = Padding.Medium, end = Padding.Medium),
             value = description,
-            onValueChange = {
-                description = it
-            },
+            onValueChange = { description = it },
             label = {
                 Text(text = stringResource(R.string.description))
             }
@@ -129,9 +130,7 @@ internal fun AddTransactionScreen(
                 .fillMaxWidth()
                 .padding(start = Padding.Medium, end = Padding.Medium),
             value = amount,
-            onValueChange = {
-                amount = it
-            },
+            onValueChange = { amount = it },
             label = {
                 Text(text = stringResource(id = R.string.amount))
             },

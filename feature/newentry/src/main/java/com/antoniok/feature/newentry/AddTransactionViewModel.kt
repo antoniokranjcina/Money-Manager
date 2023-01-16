@@ -5,42 +5,33 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.antoniok.core.domain.usecase.category.GetCategoriesWithTypeUseCase
 import com.antoniok.core.domain.usecase.transaction.InsertTransactionUseCase
 import com.antoniok.core.model.Transaction
 import com.antoniok.core.model.TransactionType
 import com.antoniok.core.model.category.Category
-import com.antoniok.core.model.category.TransactionTypeWithCategories
-import com.antoniok.core.model.category.previewTypeWithCategories
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.launch
 import java.time.LocalDateTime
 
-val typeWithCategories: Flow<List<TransactionTypeWithCategories>> = flow {
-    emit(previewTypeWithCategories)
-}
-
 class AddTransactionViewModel(
     private val insertTransactionUseCase: InsertTransactionUseCase,
+    private val getCategoriesWithTypeUseCase: GetCategoriesWithTypeUseCase
 ) : ViewModel() {
 
-    val transactionTypes by mutableStateOf(
-        listOf(
-            TransactionType.EXPENSE,
-            TransactionType.INCOME
-        )
-    )
-
+    var transactionTypes = mutableStateOf<List<TransactionType>>(emptyList())
     var categories by mutableStateOf(listOf<Category>())
+
+    init {
+        transactionTypes.value = listOf(
+            TransactionType.INCOME,
+            TransactionType.EXPENSE
+        )
+    }
 
     fun getCategories(type: TransactionType) {
         viewModelScope.launch {
-            typeWithCategories.collect {
-                for (i in it) {
-                    if (i.type == type) {
-                        categories = i.categories
-                    }
-                }
+            getCategoriesWithTypeUseCase.invoke(type).collect {
+                categories = it
             }
         }
     }
