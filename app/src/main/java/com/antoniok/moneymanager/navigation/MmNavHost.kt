@@ -6,7 +6,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import com.antoniok.feature.dashboard.navigation.dashboardNavigationRoute
 import com.antoniok.feature.dashboard.navigation.dashboardScreen
-import com.antoniok.feature.newentry.navigation.newEntryScreen
+import com.antoniok.feature.newentry.navigation.addTransactionScreen
 import com.antoniok.feature.overview.navigation.overviewScreen
 
 /**
@@ -30,6 +30,6 @@ fun MmNavHost(
     ) {
         dashboardScreen()
         overviewScreen()
-        newEntryScreen(onBackPressed = onBackClick)
+        addTransactionScreen(onBackPressed = onBackClick)
     }
 }

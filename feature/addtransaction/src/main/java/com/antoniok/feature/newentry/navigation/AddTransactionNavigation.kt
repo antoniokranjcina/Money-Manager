@@ -8,11 +8,11 @@ import com.antoniok.feature.newentry.AddTransactionRoute
 
 const val addTransactionNavigationRoute = "add_transaction_route"
 
-fun NavController.navigateToNewEntry(navOptions: NavOptions? = null) {
+fun NavController.navigateToAddTransaction(navOptions: NavOptions? = null) {
     this.navigate(addTransactionNavigationRoute, navOptions)
 }
 
-fun NavGraphBuilder.newEntryScreen(onBackPressed: () -> Unit) {
+fun NavGraphBuilder.addTransactionScreen(onBackPressed: () -> Unit) {
     composable(route = addTransactionNavigationRoute) {
         AddTransactionRoute(onBackPressed = onBackPressed)
     }

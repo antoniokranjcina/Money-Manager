@@ -108,7 +108,7 @@ fun MmApp(
                     floatingActionButton = {
                         if (appState.currentTopLevelDestination != null) {
                             FloatingActionButton(
-                                onClick = appState::navigateToNewEntryDestination
+                                onClick = appState::navigateToAddTransactionDestination
                             ) {
                                 Icon(imageVector = MmIcons.Add, contentDescription = null)
                             }

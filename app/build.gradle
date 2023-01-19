@@ -55,7 +55,7 @@ dependencies {
 
     implementation project(path: ':feature:dashboard')
     implementation project(path: ':feature:overview')
-    implementation project(path: ':feature:newentry')
+    implementation project(path: ':feature:addtransaction')
 
 
     // Core
