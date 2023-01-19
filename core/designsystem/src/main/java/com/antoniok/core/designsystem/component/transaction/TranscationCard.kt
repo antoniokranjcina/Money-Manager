@@ -25,6 +25,7 @@ import com.antoniok.core.designsystem.theme.Red40
 import com.antoniok.core.model.Transaction
 import com.antoniok.core.model.category.IncomeCategory
 import com.antoniok.core.model.transaction1
+import com.antoniok.core.toDate
 
 private const val MAX_LINES = 1
 private const val COLUMN_WEIGHT = 1f
@@ -50,7 +51,7 @@ fun TransactionCard(
                 modifier = Modifier.weight(COLUMN_WEIGHT)
             ) {
                 Text(
-                    text = transaction.moneySpent,
+                    text = transaction.amount.toString(),
                     color = if (transaction.category is IncomeCategory) {
                         Green40
                     } else {
@@ -69,7 +70,7 @@ fun TransactionCard(
             }
             Spacer16()
             Text(
-                text = transaction.date,
+                text = transaction.date.toDate(),
                 style = MaterialTheme.typography.labelMedium,
                 color = GreenGray50
             )

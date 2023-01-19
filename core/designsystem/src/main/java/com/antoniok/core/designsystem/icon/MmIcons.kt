@@ -19,7 +19,7 @@ object MmIcons {
     val ArrowBack = Icons.Default.ArrowBack
 }
 
-sealed class Icon {
-    data class ImageVectorIcon(val imageVector: ImageVector) : Icon()
-    data class DrawableResourceIcon(@DrawableRes val id: Int) : Icon()
+sealed class MmIcon {
+    data class ImageVectorIcon(val imageVector: ImageVector) : MmIcon()
+    data class DrawableResourceIcon(@DrawableRes val id: Int) : MmIcon()
 }

@@ -38,7 +38,7 @@ import com.antoniok.core.designsystem.component.MmNavigationBarItem
 import com.antoniok.core.designsystem.component.MmNavigationRail
 import com.antoniok.core.designsystem.component.MmNavigationRailItem
 import com.antoniok.core.designsystem.component.MmTopAppBar
-import com.antoniok.core.designsystem.icon.Icon
+import com.antoniok.core.designsystem.icon.MmIcon
 import com.antoniok.core.designsystem.icon.MmIcons
 import com.antoniok.core.designsystem.theme.GradientColors
 import com.antoniok.core.designsystem.theme.LocalGradientColors
@@ -108,7 +108,7 @@ fun MmApp(
                     floatingActionButton = {
                         if (appState.currentTopLevelDestination != null) {
                             FloatingActionButton(
-                                onClick = appState::navigateToNewEntryDestination
+                                onClick = appState::navigateToAddTransactionDestination
                             ) {
                                 Icon(imageVector = MmIcons.Add, contentDescription = null)
                             }
@@ -168,11 +168,11 @@ private fun MmNavRail(
                         destination.unselectedIcon
                     }
                     when (icon) {
-                        is Icon.ImageVectorIcon -> Icon(
+                        is MmIcon.ImageVectorIcon -> Icon(
                             imageVector = icon.imageVector,
                             contentDescription = null
                         )
-                        is Icon.DrawableResourceIcon -> Icon(
+                        is MmIcon.DrawableResourceIcon -> Icon(
                             painter = painterResource(id = icon.id),
                             contentDescription = null
                         )
@@ -204,11 +204,11 @@ private fun MmBottomBar(
                         destination.unselectedIcon
                     }
                     when (icon) {
-                        is Icon.ImageVectorIcon -> Icon(
+                        is MmIcon.ImageVectorIcon -> Icon(
                             imageVector = icon.imageVector,
                             contentDescription = null
                         )
-                        is Icon.DrawableResourceIcon -> Icon(
+                        is MmIcon.DrawableResourceIcon -> Icon(
                             painter = painterResource(id = icon.id),
                             contentDescription = null
                         )

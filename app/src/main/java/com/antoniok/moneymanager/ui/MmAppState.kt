@@ -15,7 +15,7 @@ import androidx.navigation.navOptions
 import androidx.tracing.trace
 import com.antoniok.feature.dashboard.navigation.dashboardNavigationRoute
 import com.antoniok.feature.dashboard.navigation.navigateToDashboard
-import com.antoniok.feature.newentry.navigation.navigateToNewEntry
+import com.antoniok.feature.newentry.navigation.navigateToAddTransaction
 import com.antoniok.feature.overview.navigation.navigateToOverview
 import com.antoniok.feature.overview.navigation.overviewNavigationRoute
 import com.antoniok.moneymanager.navigation.TopLevelDestination
@@ -90,8 +90,8 @@ class MmAppState(
         }
     }
 
-    fun navigateToNewEntryDestination() {
-        navController.navigateToNewEntry()
+    fun navigateToAddTransactionDestination() {
+        navController.navigateToAddTransaction()
     }
 
     fun onBackClick() {

@@ -33,11 +33,16 @@ android {
 dependencies {
 
     implementation project(path: ':core:model')
+    implementation project(path: ':core:database')
+    implementation project(path: ':core:data')
+    implementation project(path: ':core:common')
 
     // Core
     implementation "androidx.core:core-ktx:$core_ktx_version"
     implementation "androidx.lifecycle:lifecycle-runtime-ktx:$android_lifecycle_ktx_version"
 
+    // DI - Koin
+    implementation "io.insert-koin:koin-android:$koin_android_version"
 
     // Tests
     testImplementation "junit:junit:$junit_version"

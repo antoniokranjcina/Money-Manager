@@ -7,4 +7,14 @@
 
     <string name="last_transactions">Last Transactions</string>
 
+    <string name="categories">Categories</string>
+
+    <string name="pick_a_date">Pick a date</string>
+    <string name="pick_a_time">Pick a time</string>
+
+    <string name="date">Date</string>
+
+    <string name="ok">OK</string>
+    <string name="cancel">Cancel</string>
+
 </resources>
