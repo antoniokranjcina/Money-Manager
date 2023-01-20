@@ -4,8 +4,8 @@ import android.app.Application
 import com.antoniok.core.data.dataModule
 import com.antoniok.core.database.databaseModule
 import com.antoniok.core.domain.domainModule
+import com.antoniok.feature.addtransaction.addTransactionModule
 import com.antoniok.feature.dashboard.dashboardModule
-import com.antoniok.feature.newentry.addTransactionModule
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
 import org.koin.core.context.startKoin

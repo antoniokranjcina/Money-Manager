@@ -1,4 +1,4 @@
-package com.antoniok.feature.newentry
+package com.antoniok.feature.addtransaction
 
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf

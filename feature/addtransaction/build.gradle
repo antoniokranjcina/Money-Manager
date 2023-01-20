@@ -4,7 +4,7 @@ plugins {
 }
 
 android {
-    namespace 'com.antoniok.feature.newentry'
+    namespace 'com.antoniok.feature.addtransaction'
     compileSdk 33
 
     defaultConfig {

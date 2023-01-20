@@ -4,9 +4,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
+import com.antoniok.feature.addtransaction.navigation.addTransactionScreen
 import com.antoniok.feature.dashboard.navigation.dashboardNavigationRoute
 import com.antoniok.feature.dashboard.navigation.dashboardScreen
-import com.antoniok.feature.newentry.navigation.addTransactionScreen
 import com.antoniok.feature.overview.navigation.overviewScreen
 
 /**

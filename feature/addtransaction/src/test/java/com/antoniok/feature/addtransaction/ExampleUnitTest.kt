@@ -1,4 +1,4 @@
-package com.antoniok.feature.newentry
+package com.antoniok.feature.addtransaction
 
 import org.junit.Assert.assertEquals
 import org.junit.Test

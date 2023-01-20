@@ -1,4 +1,4 @@
-package com.antoniok.feature.newentry
+package com.antoniok.feature.addtransaction
 
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
