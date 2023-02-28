@@ -44,11 +44,13 @@ import java.time.LocalDateTime
 @Composable
 fun AddTransactionRoute(
     modifier: Modifier = Modifier,
+    navigateToCategory: () -> Unit,
     onBackPressed: () -> Unit,
     addTransactionViewModel: AddTransactionViewModel = getViewModel()
 ) {
     AddTransactionScreen(
         modifier = modifier,
+        navigateToCategory = navigateToCategory,
         onBackPressed = onBackPressed,
         type = addTransactionViewModel.transactionTypes.value,
         getCategories = {
@@ -72,6 +74,7 @@ fun AddTransactionRoute(
 @Composable
 internal fun AddTransactionScreen(
     modifier: Modifier = Modifier,
+    navigateToCategory: () -> Unit,
     onBackPressed: () -> Unit,
     type: List<TransactionType>,
     getCategories: (type: TransactionType) -> List<Category>,
@@ -124,9 +127,7 @@ internal fun AddTransactionScreen(
                 }
             }
             IconButton(
-                onClick = {
-                    //
-                },
+                onClick = { navigateToCategory() },
                 content = {
                     Icon(
                         imageVector = MmIcon.ImageVectorIcon(MmIcons.Add).imageVector,
@@ -194,6 +195,7 @@ internal fun AddTransactionScreen(
 @Composable
 private fun AddTransactionScreenPreview() {
     AddTransactionScreen(
+        navigateToCategory = {},
         onBackPressed = {},
         type = listOf(TransactionType.INCOME, TransactionType.EXPENSE),
         getCategories = { listOf(previewIncomeCategory1) },

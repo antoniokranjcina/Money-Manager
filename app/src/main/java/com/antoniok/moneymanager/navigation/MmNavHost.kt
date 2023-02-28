@@ -4,7 +4,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
-import com.antoniok.feature.addtransaction.navigation.addTransactionScreen
+import com.antoniok.feature.addtransaction.navigation.addTransactionGraph
+import com.antoniok.feature.category.navigation.categoryScreen
+import com.antoniok.feature.category.navigation.navigateToAddCategory
 import com.antoniok.feature.dashboard.navigation.dashboardNavigationRoute
 import com.antoniok.feature.dashboard.navigation.dashboardScreen
 import com.antoniok.feature.overview.navigation.overviewScreen
@@ -30,6 +32,14 @@ fun MmNavHost(
     ) {
         dashboardScreen()
         overviewScreen()
-        addTransactionScreen(onBackPressed = onBackClick)
+        addTransactionGraph(
+            navigateToCategory = {
+                navController.navigateToAddCategory()
+            },
+            nestedGraphs = {
+                categoryScreen(onBackPressed = onBackClick)
+            },
+            onBackPressed = onBackClick
+        )
     }
 }
